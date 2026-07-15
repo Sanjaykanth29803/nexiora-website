@@ -126,7 +126,7 @@
   .ficon.c3{background:#FBEBC7;} .ficon.c3 svg{stroke:#8A6212;}
   .ficon.c4{background:#F1DCE0;} .ficon.c4 svg{stroke:var(--maroon-deep);}
   .feature svg{width:20px; height:20px; stroke-width:1.7; fill:none;}
-  .feature h3{font-size:16px; font-weight:600; margin-bottom:8px;}
+  .feature h3{font-size:16px; font-weight:600; margin-bottom:8px; color:var(--ink);}
   .feature p{color:var(--ink-soft); font-size:14px;}
 
   /* process */
@@ -201,14 +201,23 @@
     .crow{grid-template-columns:1fr; gap:4px; padding:12px 0;}
     .crow.head{display:none;}
     .ccell{padding:4px 20px;}
+    .crow .ccell.before::before{content:"Today: "; font-weight:700; color:var(--ink-soft); display:inline-block; margin-right:4px;}
+    .crow .ccell.after::before{content:"With Nexiora: "; font-weight:700; color:var(--teal-deep); display:inline-block; margin-right:4px;}
     .cohort{grid-template-columns:1fr; text-align:left;}
     .profile-card{grid-template-columns:1fr; text-align:center;}
     .profile-links{justify-content:center;}
     .field-row{grid-template-columns:1fr;}
   }
   @media (max-width:520px){
-    .waitlist-form{flex-direction:column;}
-    .btn-gold{width:100%;}
+    nav{flex-direction:column; align-items:center; gap:12px;}
+    .process{grid-template-columns:1fr;}
+    .waitlist-form{flex-direction:column; border:none; background:transparent;}
+    .waitlist-form input[type=email]{
+      border:1.5px solid var(--ink); border-radius:var(--radius); margin-bottom:10px; background:#fff;
+    }
+    .waitlist-form .btn-gold{
+      border:1.5px solid var(--ink); border-radius:var(--radius); width:100%;
+    }
   }
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
