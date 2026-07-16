@@ -41,15 +41,24 @@ app.get('*', (req, res) => {
 // Centralized error handler middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+// Export for Vercel Serverless
+module.exports = app;
 
-const server = app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+// Only listen locally if not in Vercel
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  const server = app.listen(PORT, () => {
+    console.log(`Server running locally on port ${PORT}`);
+  });
+}
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.error(`Error: ${err.message}`);
-  // Close server & exit process
-  server.close(() => process.exit(1));
+  // Close server & exit process if running locally
+  if (typeof server !== 'undefined' && server) {
+    server.close(() => process.exit(1));
+  } else {
+    process.exit(1);
+  }
 });
