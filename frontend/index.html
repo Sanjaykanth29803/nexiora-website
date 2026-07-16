@@ -1328,8 +1328,9 @@
       }
       await refreshCount();
     }catch(err){
-      fullMsg.textContent = err.message || 'Something went wrong. Please try again.';
+      fullMsg.textContent = 'A server connection error occurred. Please try again in a few minutes.';
       fullMsg.className = 'form-msg err';
+      console.error(err);
     }finally{
       btn.disabled = false;
       btn.textContent = 'Reserve your spot';
@@ -1375,9 +1376,11 @@
         closeModal('contact-modal');
         contactMsg.textContent = '';
       }, 2500);
-    } catch (err) {
-      contactMsg.textContent = err.message || 'Failed to send message. Please try again.';
-      contactMsg.className = 'form-msg err';
+    } catch (error) {
+      contactMsg.style.display = 'block';
+      contactMsg.style.color = '#dc2626'; // Error red
+      contactMsg.textContent = 'A server connection error occurred. Please try again in a few minutes.';
+      console.error('Waitlist submission error:', error);
     } finally {
       btn.disabled = false;
       btn.textContent = 'Send Message';
