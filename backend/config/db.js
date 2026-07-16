@@ -12,7 +12,7 @@ const connectDB = async () => {
   const dbUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/nexiora';
   
   if (process.env.NODE_ENV === 'production' && (!process.env.MONGO_URI || process.env.MONGO_URI.includes('localhost') || process.env.MONGO_URI.includes('127.0.0.1'))) {
-    console.warn('WARNING: Running in production but no valid MONGO_URI provided. Database operations will fail.');
+    throw new Error('FATAL: Vercel is missing the MONGO_URI environment variable! You must add it in the Vercel Dashboard and REDEPLOY.');
   }
 
   try {
