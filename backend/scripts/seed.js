@@ -51,7 +51,7 @@ const testimonials = [
 const seedDB = async () => {
   try {
     console.log('Connecting to database...');
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/nexiora');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/nexiora');
     console.log('MongoDB Connected successfully.');
 
     // Clear existing data
