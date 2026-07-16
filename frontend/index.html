@@ -64,14 +64,15 @@
 
   /* ---- hero ---- */
   .hero{position:relative; z-index:2; padding:80px 0 60px;}
-  .hero-content{max-width:720px;}
-  .eyebrow-row{display:flex; align-items:center; gap:10px; margin-bottom:20px;}
+  .hero-content{max-width:860px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center;}
+  .eyebrow-row{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:20px;}
   .eyebrow-tamil{font-family:'Noto Sans Tamil'; font-size:15px; color:var(--maroon); font-weight:600;}
   .eyebrow-sep{width:1px; height:14px; background:var(--line);}
   .eyebrow{font-size:12.5px; color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase; font-weight:700;}
   h1.headline{font-size:clamp(36px, 5.2vw, 56px); font-weight:700; line-height:1.15; margin-bottom:24px; color:var(--ink);}
   h1.headline em{font-style:normal; color:var(--maroon); position:relative;}
-  .sub{font-size:17.5px; color:var(--ink-soft); max-width:54ch; margin-bottom:32px; line-height:1.6;}
+  .sub{font-size:17.5px; color:var(--ink-soft); max-width:72ch; margin-bottom:32px; line-height:1.6;}
+  .hero-content .sub{text-align:center !important;}
   .sub b{color:var(--ink); font-weight:600;}
 
   .waitlist-form{display:flex; gap:0; max-width:480px; border:1.5px solid var(--ink); border-radius:var(--radius); overflow:hidden; background:#fff; box-shadow: 0 4px 12px rgba(44, 27, 20, 0.04);}
@@ -450,34 +451,6 @@
   </div>
 </section>
 
-<section id="showcase" style="background:var(--ivory);">
-  <div class="wrap">
-    <div class="section-head" style="max-width: 760px; margin: 0 auto; text-align: center;">
-      <span class="eyebrow">Product Preview</span>
-      <h2>A unified workspace for financial and sales intelligence</h2>
-      <p>No generic templates. Your team receives a custom Power BI dashboard aligned with your company's aesthetic and operational objectives.</p>
-    </div>
-    
-    <div class="showcase-preview">
-      <img src="nexiora_dashboard_preview.png" alt="Nexiora Custom Business Intelligence Dashboard Mockup" loading="lazy">
-    </div>
-    
-    <div class="showcase-grid">
-      <div style="background: #fff; padding: 24px; border-radius: var(--radius); border: 1.5px solid var(--ink);">
-        <h4 style="font-family: 'Fraunces', serif; font-size: 16px; margin-bottom: 8px; color: var(--maroon); font-weight:700;">Reconciled Ledgers</h4>
-        <p style="color: var(--ink-soft); font-size: 14px; line-height:1.6;">Reconcile Shopify refunds and RazorPay settlements automatically with Tally and Zoho Books balances.</p>
-      </div>
-      <div style="background: #fff; padding: 24px; border-radius: var(--radius); border: 1.5px solid var(--ink);">
-        <h4 style="font-family: 'Fraunces', serif; font-size: 16px; margin-bottom: 8px; color: var(--teal); font-weight:700;">Marketing Spend ROI</h4>
-        <p style="color: var(--ink-soft); font-size: 14px; line-height:1.6;">Cross-reference Meta &amp; Google ad expenditures with real-time revenue to calculate exact customer acquisition cost.</p>
-      </div>
-      <div style="background: #fff; padding: 24px; border-radius: var(--radius); border: 1.5px solid var(--ink);">
-        <h4 style="font-family: 'Fraunces', serif; font-size: 16px; margin-bottom: 8px; color: #8A6212; font-weight:700;">Executive Overview</h4>
-        <p style="color: var(--ink-soft); font-size: 14px; line-height:1.6;">View consolidated gross margins, EBITDA, and branch metrics in a simple 1-page report for leadership review.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="benefits">
   <div class="wrap">
