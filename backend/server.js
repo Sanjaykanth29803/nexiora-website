@@ -9,8 +9,8 @@ const errorHandler = require('./middleware/errorHandler');
 // Load environment variables
 dotenv.config();
 
-// Connect to Database
-connectDB();
+// Note: We don't call connectDB() directly here anymore.
+// We will call it in a middleware so Vercel waits for the connection on every request.
 
 const app = express();
 
@@ -22,6 +22,16 @@ app.use(cors());
 
 // Apply rate limiting to all requests
 app.use(apiLimiter);
+
+// Database Connection Middleware (CRITICAL FOR VERCEL)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // Mount routes
 app.use('/api/auth', require('./routes/authRoutes'));
