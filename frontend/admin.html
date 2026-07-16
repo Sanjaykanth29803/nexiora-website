@@ -417,7 +417,6 @@
         <li class="menu-item" data-tab="waitlist">Waitlist</li>
         <li class="menu-item" data-tab="contacts">Inquiries</li>
         <li class="menu-item" data-tab="subscribers">Subscribers</li>
-        <li class="menu-item" data-tab="courses">Course Catalog</li>
       </ul>
       <div class="aside-footer">
         <div id="admin-user-display" class="admin-info">Logged in as...</div>
@@ -447,10 +446,6 @@
           <div class="kpi-card">
             <div class="kpi-title">Newsletter Subscribers</div>
             <div class="kpi-value" id="kpi-subscribers">-</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-title">Active Courses</div>
-            <div class="kpi-value" id="kpi-courses">-</div>
           </div>
         </div>
         
@@ -547,60 +542,7 @@
         </div>
       </section>
       
-      <!-- Course Catalog Section -->
-      <section id="tab-courses" class="tab-section">
-        <div class="panel-header">
-          <h2>Manage Course Catalog</h2>
-          <button class="btn" style="width:auto; margin:0; padding:8px 16px; font-size:13px;" onclick="showAddCourseModal()">Add Course</button>
-        </div>
-        <div class="table-container">
-          <table id="table-courses">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Track / Path</th>
-                <th>Duration</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td colspan="5" class="loading-text">Loading course list...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </main>
-  </div>
-
-  <!-- Course Form Modal -->
-  <div id="course-modal" class="modal-overlay">
-    <div class="modal-card">
-      <h3 id="course-modal-title">Add New Course</h3>
-      <form id="course-form" novalidate>
-        <input type="hidden" id="course-id">
-        <div class="field">
-          <label for="course-title">Course Title</label>
-          <input type="text" id="course-title" required placeholder="e.g. Power BI Ledger Reconcile">
-        </div>
-        <div class="field">
-          <label for="course-track">Track Name</label>
-          <input type="text" id="course-track" required placeholder="e.g. Finance & Accounting">
-        </div>
-        <div class="field">
-          <label for="course-duration">Duration</label>
-          <input type="text" id="course-duration" required placeholder="e.g. 4 weeks">
-        </div>
-        <div class="field">
-          <label for="course-desc">Description</label>
-          <input type="text" id="course-desc" required placeholder="Short description of the course content">
-        </div>
-        <div class="modal-actions">
-          <button type="button" onclick="closeCourseModal()" class="btn btn-secondary" style="width:auto; margin:0;">Cancel</button>
-          <button type="submit" class="btn" style="width:auto; margin:0;" id="btn-save-course">Save Course</button>
-        </div>
-      </form>
-    </div>
   </div>
 
   <script>
@@ -691,43 +633,6 @@
         }
       });
 
-      // Course Form Handler
-      const courseForm = document.getElementById('course-form');
-      courseForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const courseId = document.getElementById('course-id').value;
-        const title = document.getElementById('course-title').value.trim();
-        const track = document.getElementById('course-track').value.trim();
-        const duration = document.getElementById('course-duration').value.trim();
-        const description = document.getElementById('course-desc').value.trim();
-
-        if (!title || !track || !duration || !description) {
-          alert('Please fill out all fields');
-          return;
-        }
-
-        const url = courseId ? `/api/courses/${courseId}` : '/api/courses';
-        const method = courseId ? 'PUT' : 'POST';
-
-        try {
-          const res = await fetch(url, {
-            method,
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ title, track, duration, description })
-          });
-          const data = await res.json();
-
-          if (!res.ok) throw new Error(data.message || 'Failed to save course');
-          
-          closeCourseModal();
-          loadCourses();
-        } catch (err) {
-          alert(err.message);
-        }
-      });
     }
 
     // Sidebar Menu Navigation
@@ -771,9 +676,6 @@
         case 'subscribers':
           loadSubscribers();
           break;
-        case 'courses':
-          loadCourses();
-          break;
       }
     }
 
@@ -810,7 +712,6 @@
         document.getElementById('kpi-waitlist').textContent = data.data.counts.waitlist;
         document.getElementById('kpi-contacts').textContent = data.data.counts.contacts;
         document.getElementById('kpi-subscribers').textContent = data.data.counts.subscribers;
-        document.getElementById('kpi-courses').textContent = data.data.counts.courses;
 
         // Render notifications
         tNotifications.innerHTML = '';
@@ -1018,77 +919,6 @@
       } catch (err) {
         alert(err.message);
       }
-    }
-
-    // 5. Load Courses Tab
-    async function loadCourses() {
-      const tbody = document.getElementById('table-courses').getElementsByTagName('tbody')[0];
-      tbody.innerHTML = '<tr><td colspan="5" class="loading-text">Loading courses...</td></tr>';
-      
-      try {
-        const res = await fetch('/api/courses');
-        const data = await res.json();
-        if (!data.success) throw new Error(data.message);
-
-        tbody.innerHTML = '';
-        if (data.data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--ink-soft);">No courses in catalog</td></tr>';
-          return;
-        }
-
-        data.data.forEach(item => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td><strong>${item.title}</strong></td>
-            <td>${item.track}</td>
-            <td>${item.duration}</td>
-            <td>${item.description}</td>
-            <td class="actions-cell">
-              <button onclick="showEditCourseModal('${item._id}', '${escapeHtml(item.title)}', '${escapeHtml(item.track)}', '${escapeHtml(item.duration)}', '${escapeHtml(item.description)}')" class="btn-sm btn-action">Edit</button>
-              <button onclick="deleteCourse('${item._id}')" class="btn-sm btn-delete">Delete</button>
-            </td>
-          `;
-          tbody.appendChild(row);
-        });
-      } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="5" class="form-msg err">${err.message}</td></tr>`;
-      }
-    }
-
-    async function deleteCourse(id) {
-      if (!confirm('Delete this course?')) return;
-      try {
-        const res = await fetch(`/api/courses/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!res.ok) throw new Error('Failed to delete course');
-        loadCourses();
-      } catch (err) {
-        alert(err.message);
-      }
-    }
-
-    // Course Modals
-    function showAddCourseModal() {
-      document.getElementById('course-id').value = '';
-      document.getElementById('course-form').reset();
-      document.getElementById('course-modal-title').textContent = 'Add New Course';
-      document.getElementById('course-modal').style.display = 'flex';
-    }
-
-    function showEditCourseModal(id, title, track, duration, description) {
-      document.getElementById('course-id').value = id;
-      document.getElementById('course-title').value = title;
-      document.getElementById('course-track').value = track;
-      document.getElementById('course-duration').value = duration;
-      document.getElementById('course-desc').value = description;
-      document.getElementById('course-modal-title').textContent = 'Edit Course';
-      document.getElementById('course-modal').style.display = 'flex';
-    }
-
-    function closeCourseModal() {
-      document.getElementById('course-modal').style.display = 'none';
     }
 
     // CSV Exporters

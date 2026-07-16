@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 // Load models
 const AdminUser = require('../models/AdminUser');
 const User = require('../models/User');
-const Course = require('../models/Course');
 const Project = require('../models/Project');
 const Testimonial = require('../models/Testimonial');
 const WaitlistUser = require('../models/WaitlistUser');
@@ -16,33 +15,6 @@ const Notification = require('../models/Notification');
 
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, '../../.env') });
-
-const courses = [
-  {
-    title: 'Financial Ledger Reconciliation with Power BI',
-    description: 'Learn how to connect Tally ledgers and Zoho Books invoices, clean transaction discrepancies, and build automated cash flow dashboards.',
-    duration: '4 weeks',
-    track: 'Business Analyst',
-  },
-  {
-    title: 'E-commerce Revenue Attribution modeling',
-    description: 'Model customer lifetime value and ad spend ROI by linking Shopify sales, RazorPay settlements, and Meta Ads platforms in real-time.',
-    duration: '6 weeks',
-    track: 'Data Analyst',
-  },
-  {
-    title: 'Predictive Analytics for Customer Churn',
-    description: 'Using Python and machine learning pipelines to detect early customer drop-offs and integrate predictions back into BI dashboards.',
-    duration: '8 weeks',
-    track: 'Data Scientist',
-  },
-  {
-    title: 'Deploying Scalable AI Data Pipelines',
-    description: 'Design robust ETL architectures utilizing Node.js, Python, and cloud databases to stream raw transactional logs into visualization workspaces.',
-    duration: '10 weeks',
-    track: 'AI/ML Engineer',
-  }
-];
 
 const projects = [
   {
@@ -85,7 +57,6 @@ const seedDB = async () => {
     // Clear existing data
     console.log('Clearing database collections...');
     await AdminUser.deleteMany();
-    await Course.deleteMany();
     await Project.deleteMany();
     await Testimonial.deleteMany();
     await WaitlistUser.deleteMany();
@@ -110,10 +81,6 @@ const seedDB = async () => {
     console.log(`Email:    ${adminEmail}`);
     console.log(`Password: ${adminPassword}`);
     console.log('----------------------------------------------------');
-
-    // Seed courses
-    console.log('Seeding courses...');
-    await Course.insertMany(courses);
 
     // Seed projects
     console.log('Seeding projects...');

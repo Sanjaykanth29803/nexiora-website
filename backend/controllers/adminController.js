@@ -4,7 +4,6 @@ const WaitlistUser = require('../models/WaitlistUser');
 const ContactMessage = require('../models/ContactMessage');
 const NewsletterSubscriber = require('../models/NewsletterSubscriber');
 const Notification = require('../models/Notification');
-const Course = require('../models/Course');
 
 /**
  * @desc    Get dashboard analytics
@@ -18,7 +17,6 @@ exports.getAnalytics = async (req, res, next) => {
     const subscriberCount = await NewsletterSubscriber.countDocuments();
     const userCount = await User.countDocuments();
     const adminCount = await AdminUser.countDocuments();
-    const courseCount = await Course.countDocuments();
 
     // Breakdown waitlist by team size
     const teamSizeBreakdown = await WaitlistUser.aggregate([
@@ -58,7 +56,6 @@ exports.getAnalytics = async (req, res, next) => {
           subscribers: subscriberCount,
           users: userCount,
           admins: adminCount,
-          courses: courseCount,
         },
         breakdowns: {
           teamSize: teamSizeBreakdown,

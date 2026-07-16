@@ -28,7 +28,6 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/waitlist', require('./routes/waitlistRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/newsletter', require('./routes/newsletterRoutes'));
-app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Serve static assets in production/development
