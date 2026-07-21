@@ -39,13 +39,14 @@ app.use('/api/waitlist', require('./routes/waitlistRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 app.use('/api/newsletter', require('./routes/newsletterRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 
 // Serve static assets in production/development
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Fallback route for SPA or landing page
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
 });
 
 // Centralized error handler middleware

@@ -185,6 +185,111 @@ const sendPasswordResetEmail = async (email, token) => {
   });
 };
 
+/**
+ * Send enquiry confirmation to customer
+ */
+const sendEnquiryConfirmation = async (customerName, email, enquiryId) => {
+  const html = `
+    <div style="font-family: 'Inter', sans-serif; max-width: 600px; margin: auto; padding: 30px; border: 1px solid #E5E7EB; border-radius: 8px; background-color: #ffffff;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="color: #0B1F3A; margin: 0; font-size: 24px;">Thank you for contacting Nexiora Technologies</h2>
+      </div>
+      <p style="color: #374151; font-size: 16px; line-height: 1.5;">Hello ${customerName},</p>
+      <p style="color: #374151; font-size: 16px; line-height: 1.5;">Thank you for reaching out to us. We have successfully received your enquiry regarding our data analytics consulting services.</p>
+      
+      <div style="background-color: #F3F4F6; padding: 20px; border-radius: 6px; border-left: 4px solid #D4AF37; margin: 25px 0;">
+        <p style="margin: 0 0 10px 0; color: #111827;"><strong>Request ID:</strong> ${enquiryId}</p>
+        <p style="margin: 0; color: #111827;"><strong>Current Status:</strong> Received</p>
+      </div>
+      
+      <p style="color: #374151; font-size: 16px; line-height: 1.5;">Our team will review your requirements and contact you shortly to schedule a consultation.</p>
+      
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #E5E7EB;">
+        <p style="color: #374151; font-size: 14px; font-weight: bold; margin-bottom: 5px;">For further communication:</p>
+        <p style="color: #6B7280; font-size: 14px; margin: 2px 0;">Email: <a href="mailto:sanjaychandran29803@gmail.com" style="color: #0B1F3A; text-decoration: none;">sanjaychandran29803@gmail.com</a></p>
+        <p style="color: #6B7280; font-size: 14px; margin: 2px 0;">Phone: 7904546645</p>
+        <p style="color: #6B7280; font-size: 14px; margin: 2px 0;">LinkedIn: <a href="https://www.linkedin.com/in/sanjaykanth-chandran" style="color: #0B1F3A; text-decoration: none;">linkedin.com/in/sanjaykanth-chandran</a></p>
+      </div>
+      <p style="color: #374151; font-size: 16px; margin-top: 30px;">Regards,<br><strong style="color: #0B1F3A;">Nexiora Technologies Team</strong></p>
+    </div>
+  `;
+  return await sendMail({
+    to: email,
+    subject: 'Thank you for contacting Nexiora Technologies',
+    html,
+  });
+};
+
+/**
+ * Send admin notification for new enquiry
+ */
+const sendAdminEnquiryNotification = async (enquiryData) => {
+  const adminAddress = 'sanjaychandran29803@gmail.com';
+  
+  const html = `
+    <div style="font-family: sans-serif; padding: 20px; background-color: #f9fafb; max-width: 600px; margin: auto;">
+      <h2 style="color: #0B1F3A; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">New Nexiora Service Enquiry</h2>
+      
+      <div style="background: white; padding: 15px; border-radius: 5px; margin-top: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h3 style="color: #374151; margin-top: 0;">Customer Details</h3>
+        <p><strong>Name:</strong> ${enquiryData.customerName}</p>
+        <p><strong>Company:</strong> ${enquiryData.companyName || 'N/A'}</p>
+        <p><strong>Email:</strong> ${enquiryData.email}</p>
+        <p><strong>Phone Number:</strong> ${enquiryData.phone}</p>
+      </div>
+
+      <div style="background: white; padding: 15px; border-radius: 5px; margin-top: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h3 style="color: #374151; margin-top: 0;">Project Details</h3>
+        <p><strong>Industry:</strong> ${enquiryData.industry}</p>
+        <p><strong>Required Service:</strong> ${enquiryData.requiredService}</p>
+        <p><strong>Budget:</strong> ${enquiryData.budget}</p>
+        <p><strong>Preferred Meeting Date:</strong> ${enquiryData.meetingDate}</p>
+        <p><strong>Requirement:</strong></p>
+        <blockquote style="background-color: #f3f4f6; padding: 10px; border-left: 4px solid #D4AF37;">
+          ${enquiryData.requirement}
+        </blockquote>
+      </div>
+      
+      <div style="margin-top: 20px; padding: 15px; background-color: #0B1F3A; color: white; border-radius: 5px; text-align: center;">
+        <p style="margin: 5px 0;"><strong>Enquiry ID:</strong> ${enquiryData.enquiryId}</p>
+        <p style="margin: 5px 0;"><strong>Current Status:</strong> Received</p>
+      </div>
+    </div>
+  `;
+  return await sendMail({
+    to: adminAddress,
+    subject: `[New Lead] Nexiora Service Enquiry - ${enquiryData.enquiryId}`,
+    html,
+  });
+};
+
+/**
+ * Send status update email to customer
+ */
+const sendEnquiryStatusUpdate = async (customerName, email, enquiryId, status) => {
+  const html = `
+    <div style="font-family: 'Inter', sans-serif; max-width: 600px; margin: auto; padding: 30px; border: 1px solid #E5E7EB; border-radius: 8px; background-color: #ffffff;">
+      <h2 style="color: #0B1F3A; margin-top: 0;">Project Status Update</h2>
+      <p style="color: #374151; font-size: 16px;">Hello ${customerName},</p>
+      <p style="color: #374151; font-size: 16px;">We are writing to provide an update on your enquiry <strong>${enquiryId}</strong>.</p>
+      
+      <div style="background-color: #F3F4F6; padding: 20px; border-radius: 6px; border-left: 4px solid #D4AF37; margin: 25px 0;">
+        <p style="margin: 0; color: #111827; font-size: 18px;"><strong>New Status:</strong> ${status}</p>
+      </div>
+      
+      <p style="color: #374151; font-size: 16px;">If you have any questions, please reply to this email or reach out to us directly.</p>
+      
+      <p style="color: #374151; font-size: 16px; margin-top: 30px;">Regards,<br><strong style="color: #0B1F3A;">Nexiora Technologies Team</strong></p>
+    </div>
+  `;
+  return await sendMail({
+    to: email,
+    subject: `Update on your Nexiora Enquiry (${enquiryId})`,
+    html,
+  });
+};
+
+
 module.exports = {
   sendWaitlistConfirmation,
   sendAdminWaitlistNotification,
@@ -192,4 +297,7 @@ module.exports = {
   sendAdminContactNotification,
   sendVerificationEmail,
   sendPasswordResetEmail,
+  sendEnquiryConfirmation,
+  sendAdminEnquiryNotification,
+  sendEnquiryStatusUpdate,
 };
