@@ -14,6 +14,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy is required for rate limiters behind Vercel/proxies
+app.set('trust proxy', 1);
+
 // Body parser
 app.use(express.json());
 
