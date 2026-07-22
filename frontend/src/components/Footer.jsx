@@ -47,8 +47,8 @@ const Footer = () => {
               <li><a href={getHref('/#about')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">About Us</a></li>
               <li><a href={getHref('/#solutions')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Solutions</a></li>
               <li><a href={getHref('/#case-studies')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Case Studies</a></li>
-              <li><Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Terms of Service</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -73,8 +73,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Nexiora Technologies. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-500 hover:text-white text-sm transition-colors">Privacy</Link>
-            <Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-500 hover:text-white text-sm transition-colors">Terms</Link>
+            <Link to="/privacy-policy" className="text-gray-500 hover:text-white text-sm transition-colors">Privacy</Link>
+            <Link to="/terms-of-service" className="text-gray-500 hover:text-white text-sm transition-colors">Terms</Link>
           </div>
         </div>
       </div>

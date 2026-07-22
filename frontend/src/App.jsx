@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import BookConsultation from './pages/BookConsultation';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -26,6 +28,8 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/book-consultation" element={<BookConsultation />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route 
             path="/admin" 
