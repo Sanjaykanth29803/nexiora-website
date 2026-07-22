@@ -1,7 +1,12 @@
 import { BarChart2, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const location = useLocation();
+
+  const getHref = (path) => {
+    return path.startsWith('/#') && location.pathname === '/' ? path.substring(1) : path;
+  };
   return (
     <footer id="contact" className="bg-navy-900 text-white pt-20 pb-10 bg-tamil-pattern-light">
       <div className="container mx-auto px-6">
@@ -29,21 +34,21 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6 text-white border-b border-navy-800 pb-2 inline-block">Services</h4>
             <ul className="space-y-3">
-              <li><Link to="/#services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Power BI Dashboards</Link></li>
-              <li><Link to="/#services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Business Intelligence</Link></li>
-              <li><Link to="/#services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Executive KPIs</Link></li>
-              <li><Link to="/#services" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Reporting Automation</Link></li>
+              <li><a href={getHref('/#services')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Power BI Dashboards</a></li>
+              <li><a href={getHref('/#services')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Business Intelligence</a></li>
+              <li><a href={getHref('/#services')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Executive KPIs</a></li>
+              <li><a href={getHref('/#services')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Reporting Automation</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold mb-6 text-white border-b border-navy-800 pb-2 inline-block">Company</h4>
             <ul className="space-y-3">
-              <li><Link to="/#about" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">About Us</Link></li>
-              <li><Link to="/#capabilities" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Solutions</Link></li>
-              <li><Link to="/#case-studies" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Case Studies</Link></li>
-              <li><Link to="/" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/" className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Terms of Service</Link></li>
+              <li><a href={getHref('/#about')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">About Us</a></li>
+              <li><a href={getHref('/#solutions')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Solutions</a></li>
+              <li><a href={getHref('/#case-studies')} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Case Studies</a></li>
+              <li><Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-400 hover:text-gold-500 text-sm transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -68,8 +73,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Nexiora Technologies. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link to="/" className="text-gray-500 hover:text-white text-sm transition-colors">Privacy</Link>
-            <Link to="/" className="text-gray-500 hover:text-white text-sm transition-colors">Terms</Link>
+            <Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-500 hover:text-white text-sm transition-colors">Privacy</Link>
+            <Link to="/" onClick={() => window.scrollTo(0,0)} className="text-gray-500 hover:text-white text-sm transition-colors">Terms</Link>
           </div>
         </div>
       </div>
